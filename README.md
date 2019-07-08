@@ -1,5 +1,6 @@
 # Переводит фотографии в текст
 Использовать преимущественно для фотографий кода ¯\\\_(ツ)\_/¯
+
 Хотя, можно переделать
 
 У функции несколько параметров:
@@ -20,6 +21,7 @@ locale.setlocale(locale.LC_ALL, 'C')
 
 # Translates photos into text
 Use primarily for code photos ¯\\\_(ツ)\_/¯
+
 Although, it is possible to alter
 
 The function has several parameters:

@@ -20,17 +20,20 @@ def picture_to_text(img, spaces="    ", text=""):
         api.SetImage(image)
         for i, (im, box, _, _) in enumerate(api.GetComponentImages(RIL.TEXTLINE, True)):
             api.SetRectangle(box['x'], box['y'], box['w'], box['h'])
-            areas[i] = {"line": api.GetUTF8Text().strip(), "confidence": api.MeanTextConf(), "x": box['x'], "y": box['y'], "width": box['w'], "heigh": box['h']}
+            areas[i] = {"line": api.GetUTF8Text().strip(), "confidence": api.MeanTextConf(), "x": box['x'],
+                        "y": box['y'], "width": box['w'], "heigh": box['h']}
     min_x = min(areas.values(), key=lambda item: item['x'])['x']
     areas = {key: {"line": values["line"],
-                    "confidence": values["confidence"],
-                    "x": values["x"] - min_x,
-                    "y": values["y"],
-                    "width": values["width"],
-                    "heigh": values["heigh"]} for key, values in areas.items()}
+                   "confidence": values["confidence"],
+                   "x": values["x"] - min_x,
+                   "y": values["y"],
+                   "width": values["width"],
+                   "heigh": values["heigh"]} for key, values in areas.items()}
     if len(areas) > 1:
         min_x = sorted(areas.values(), key=lambda item: item['x'])[1]['x']
     else:
         min_x = min(areas.values(), key=lambda item: item['x'])['x']
-    return "\n".join([f"{spaces * item['x']}{item['line']}" for item in {key: {"line": values["line"], "confidence": values["confidence"], "x": int(values["x"] / min_x), "y": values["y"], "width": values["width"], "heigh": values["heigh"]} for key, values in areas.items()}.values()])
-
+    return "\n".join([f"{spaces * item['x']}{item['line']}" for item in {
+        key: {"line": values["line"], "confidence": values["confidence"], "x": int(values["x"] / min_x),
+              "y": values["y"], "width": values["width"], "heigh": values["heigh"]} for key, values in
+        areas.items()}.values()])
